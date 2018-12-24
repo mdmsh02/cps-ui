@@ -1,60 +1,147 @@
 import React, { Component } from 'react';
 import TabLayout from '../components/TabLayout';
-import {connect} from 'react-redux';
-import customerActions  from '../redux/customer/actions';
-import {bindActionCreators} from 'redux';
-const {fetchCustomerDetails,updateCustomerFeature}= customerActions;
+import { connect } from 'react-redux';
+import customerActions from '../redux/customer/actions';
+import { bindActionCreators } from 'redux';
+const {
+  fetchCustomerDetails,
+  updateCustomerFeature,
+  updateScreenTrackingFeature,
+  updateAnalyticsFeature
+} = customerActions;
 class CustomerContainer extends Component {
-   constructor(props){
-       super(props);
-       this.onFeatureChanged=this.onFeatureChanged.bind(this);
-   }
-    componentDidMount(){
-        this.props.fetchCustomerDetails();
-    }
-    
-    
-    componentWillReceiveProps(nextProps){
-        if(nextProps.updatedCustomer){
-            console.log(this.props.customer)
-            this.props.customer.features.ess = nextProps.updatedCustomer
-        }
-    }
-    onFeatureChanged(event , featureList,switchItem){
-        const updatedItem = {featurename:switchItem,enable:event.target.checked};
-        const index = featureList.ess.findIndex(item => item.featurename === updatedItem.featurename)
-        const updatedList= [
-        ...featureList.ess.slice(0,index),
-        updatedItem,
-        ...featureList.ess.slice(index+1)
-        ]
-        this.props.updateCustomerFeature(updatedList);
-    }
-   render() {
-      
-     
-     return (
-       <div>
-           
-                <TabLayout data={this.props.customer} onFeatureChanged = {this.onFeatureChanged}></TabLayout>
-           
-       
-       </div>
-     );
-   }
- }
- 
- const mapStateToProps = ({Customer:customer}) =>{
-     debugger
-     return {
-         customer: customer.customer,
-         updatedCustomer : customer.customer.featureUpdated,
-        
-     }
- }
+  constructor(props) {
+    super(props);
+    this.switchHandler = this.switchHandler.bind(this);
+    this.screenTrackingSwitchHandler = this.screenTrackingSwitchHandler.bind(this);
+    this.analyticsTextChangeHandler = this.analyticsTextChangeHandler.bind(this);
+  }
+  componentDidMount() {
+    this.props.fetchCustomerDetails();
+  }
 
-const mapDispatchToProps = (dispatch) =>{
-  //  console.log(fetchCustomerDetails);
-    return bindActionCreators({fetchCustomerDetails,updateCustomerFeature},dispatch);
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.updatedCustomer) {
+      console.log(this.props.customer)
+      this.props.customer.features.ess = nextProps.updatedCustomer
+    }
+  }
+  analyticsTextChangeHandler(updatedObject, analyticsObejct) {
+
+    const analyticsData = Object.assign({}, analyticsObejct);
+    console.log(analyticsData)
+    this.props.updateAnalyticsFeature(analyticsData);
+
+  }
+  screenTrackingSwitchHandler(event, screenTrakingData, switchItem, pagename, actionType) {
+    const copyScreenTrakingData = Object.assign([], screenTrakingData)
+    switch (actionType) {
+      case 'ON_PAGE_ACTION_FIRE': {
+        const itemToUpdated = {
+          pagename: switchItem,
+          canTrackPage: event.target.checked,
+          actions: copyScreenTrakingData.filter(item => item.pagename === pagename).map(item => item.actions)[0]
+        };
+        const index = copyScreenTrakingData.findIndex(
+          item => item.pagename === itemToUpdated.pagename
+        );
+        const updatedscreenTrakingDataofPage = [
+          ...copyScreenTrakingData.slice(0, index),
+          itemToUpdated,
+          ...copyScreenTrakingData.slice(index + 1)
+        ];
+        //console.log(screenTrakingData)
+        //console.log(updatedscreenTrakingDataofPage)
+        this.props.updateScreenTrackingFeature(updatedscreenTrakingDataofPage);
+        break;
+      }
+
+      case 'ONACTION_ACTION_FIRE': {
+        const itemActionToUpdated = {
+          actionname: switchItem,
+          canTrackAction: event.target.checked,
+        };
+        let pageData = copyScreenTrakingData.filter(item => item.pagename === pagename)
+        const actions = pageData.map(item => item.actions)
+        const index = actions[0].findIndex(
+          item => item.actionname === itemActionToUpdated.actionname
+        );
+        const updatedActionsOfPage = [
+          ...actions[0].slice(0, index),
+          itemActionToUpdated,
+          ...actions[0].slice(index + 1)
+        ];
+        const actionsObj = { actions: updatedActionsOfPage }
+        const mergedUpdatedActionOnPage = Object.assign({}, pageData[0], actionsObj);
+        const pageIndex = copyScreenTrakingData.findIndex(item => item.pagename === mergedUpdatedActionOnPage.pagename)
+        console.log(pageIndex)
+        const updatedscreenTrakingData = [
+          ...copyScreenTrakingData.slice(0, index),
+          mergedUpdatedActionOnPage,
+          ...copyScreenTrakingData.slice(index + 1)
+        ]
+        // console.log(screenTrakingData)
+        //console.log(updatedscreenTrakingData)
+        this.props.updateScreenTrackingFeature(updatedscreenTrakingData);
+        break;
+      }
+      default:
+        break;
+    }
+  }
+  switchHandler(event, featureList, switchItem, actionType) {
+    const updatedItem = {
+      featurename: switchItem,
+      enable: event.target.checked
+    };
+    const index = featureList.ess.findIndex(
+      item => item.featurename === updatedItem.featurename
+    );
+    const updatedList = [
+      ...featureList.ess.slice(0, index),
+      updatedItem,
+      ...featureList.ess.slice(index + 1)
+    ];
+    this.props.updateCustomerFeature(updatedList);
+  }
+  onFeatureChanged(event, featureList, switchItem) {
+    const updatedItem = { featurename: switchItem, enable: event.target.checked };
+    const index = featureList.ess.findIndex(item => item.featurename === updatedItem.featurename)
+    const updatedList = [
+      ...featureList.ess.slice(0, index),
+      updatedItem,
+      ...featureList.ess.slice(index + 1)
+    ]
+    this.props.updateCustomerFeature(updatedList);
+  }
+  render() {
+    return (
+      <div>
+        <TabLayout
+          data={this.props.customer}
+          switchHandler={this.switchHandler}
+          screenTrackingSwitchHandler={this.screenTrackingSwitchHandler}
+          analyticsTextChangeHandler={this.analyticsTextChangeHandler}
+        />
+      </div>
+    );
+  }
 }
- export default connect(mapStateToProps,mapDispatchToProps) (CustomerContainer);
+
+const mapStateToProps = ({ Customer: customer }) => {
+  debugger
+  return {
+    customer: customer.customer,
+    updatedCustomer: customer.customer.featureUpdated,
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  //  console.log(fetchCustomerDetails);
+  return bindActionCreators(
+    { fetchCustomerDetails, updateCustomerFeature, updateScreenTrackingFeature, updateAnalyticsFeature },
+    dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerContainer);

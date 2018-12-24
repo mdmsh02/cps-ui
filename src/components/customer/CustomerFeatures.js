@@ -26,19 +26,22 @@ console.log(props.feature);
   const { ess } = props.feature;
     console.log(ess);
   return (
+      <div> <h2>Customer Features</h2>
     <FormControl component="fieldset">
       <FormLabel component="legend">Feature Control</FormLabel>
       <FormGroup>
         {ess.map((features,index) => (
+            
           <SwitchControlLayout key={features.featurename+index}
             name={features.featurename}
             action ={ features.enable}
-            onchange={(event) => props.switchHandler(event,props.feature,features.featurename)}
+            onchange={(event) => props.switchHandler(event,props.feature,features.featurename,'CUSTOMER_FEATURE_UPDATE')}
           />
         ))}
       </FormGroup>
       <FormHelperText>Be careful</FormHelperText>
     </FormControl>
+    </div>
   );
 };
 
