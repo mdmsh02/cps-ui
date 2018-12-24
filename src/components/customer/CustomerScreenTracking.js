@@ -12,8 +12,10 @@ const customerScreenTracking = props =>{
        <h2>Screen Trakcing</h2>
        {
            screenTrackingData.map((data,index) =>(
-            <CardLayout 
+            <CardLayout  key={index+data.pagename}
             screenData ={data}
+            switchHandler ={props.switchHandler}
+            screenTracking = {screenTrackingData}
             ></CardLayout>
            ))
        }

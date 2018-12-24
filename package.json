@@ -19,7 +19,8 @@
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^5.1.1",
     "redux-saga": "^0.16.2",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "deepmerge": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,8 +36,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "redux-devtools-extension": "^2.13.7"
-  }
+  ]
 }

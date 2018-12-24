@@ -9,6 +9,7 @@ import CustomerBasicInfo from "./customer/CustomerBasicInfo";
 import CustomerTheme from './customer/CustomerTheme';
 import CustomerFeatures from './customer/CustomerFeatures';
 import CustomerScreenTracking from './customer/CustomerScreenTracking';
+import CustomerAnalytics from './customer/CustomerAnalytics';
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -38,7 +39,7 @@ class TabLayout extends React.Component {
   };
 
   render() {
-    const { classes, data, onFeatureChanged } = this.props;
+    const { classes, data, switchHandler,screenTrackingSwitchHandler,analyticsTextChangeHandler } = this.props;
     const { value } = this.state;
     const {CustomerKey,customerid,customername,canAudit} = data;
       const MetaData ={
@@ -50,6 +51,11 @@ class TabLayout extends React.Component {
       const {theme} = data;
       const {features} = data;
       const {screenTracking} = data;
+      const {googleanalytics,appcenteranalytics} =Object.assign ({},data);
+      const Analytics ={
+        googleanalytics,
+        appcenteranalytics
+       } 
       console.log(data);
     return (
       <div className={classes.root}>
@@ -59,6 +65,7 @@ class TabLayout extends React.Component {
             <Tab label="Themes" />
             <Tab label="Features" />
             <Tab label="Screen Tracking" />
+            <Tab label="Analytics" />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>
@@ -68,10 +75,13 @@ class TabLayout extends React.Component {
             <CustomerTheme theme ={theme}/>
         </TabContainer>}
         {value === 2 && <TabContainer>
-            <CustomerFeatures feature = {features} switchHandler = {onFeatureChanged}></CustomerFeatures>
+            <CustomerFeatures feature = {features} switchHandler = {switchHandler}></CustomerFeatures>
         </TabContainer>}
         {value === 3 && <TabContainer>
-            <CustomerScreenTracking screenTracking = {screenTracking} switchHandleer={onFeatureChanged} />
+            <CustomerScreenTracking screenTracking = {screenTracking} switchHandler = {screenTrackingSwitchHandler} />
+        </TabContainer>}
+        {value === 4 && <TabContainer>
+            <CustomerAnalytics analyticsData = {Analytics} onChangeHandler = {analyticsTextChangeHandler} />
         </TabContainer>}
       </div>
     );

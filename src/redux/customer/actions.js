@@ -29,5 +29,15 @@ const customerAction = {
             dispatch({type:"CUSTOMER_FEATURE_UPDATE",payload:param})
         }
     },
+    updateScreenTrackingFeature: (param) => {
+        return (dispatch) =>{
+            dispatch({type:"CUSTOMER_SCREENTRACKING_UPDATE",payload:param})
+        }
+    },
+    updateAnalyticsFeature: (param) => {
+        return (dispatch) =>{
+            dispatch({type:"CUSTOMER_ANALYTICS_UPDATE",payload:param})
+        }
+    }
 }
 export default customerAction

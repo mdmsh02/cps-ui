@@ -26,7 +26,7 @@ const styles = theme => ({
      // console.log(this.props.BaiscInfo);
         return (
           <div>
-            <h1>Customer Basic Details</h1>
+            <h2>Customer Basic Details</h2>
             <form  noValidate autoComplete="off">
               <TextField
                 id="filled-full-width"
