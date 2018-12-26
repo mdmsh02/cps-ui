@@ -27,11 +27,11 @@ const styles = theme => ({
         return (
           <div>
             <h2>Customer Basic Details</h2>
-            <form  noValidate autoComplete="off">
+            <form noValidate autoComplete="off">
               <TextField
                 id="filled-full-width"
                 label="Customer Id"
-                value ={props.basicInfo.customerid}
+                value={props.basicInfo.customerid}
                 style={{ margin: 8 }}
                 placeholder="Customer Id"
                 helperText="unique id customer"
@@ -48,7 +48,7 @@ const styles = theme => ({
               <TextField
                 id="filled-full-width"
                 label="Customer Key"
-                value ={props.basicInfo.CustomerKey}
+                value={props.basicInfo.CustomerKey}
                 style={{ margin: 8 }}
                 placeholder="Customer Key"
                 helperText="Unique key for customer"
@@ -62,7 +62,7 @@ const styles = theme => ({
                   shrink: true
                 }}
               />
-      
+
               <TextField
                 id="filled-full-width"
                 label="Customer Name"
@@ -81,7 +81,7 @@ const styles = theme => ({
                 }}
               />
             </form>
-            </div>
+          </div>
           );
     }
    

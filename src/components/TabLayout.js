@@ -69,7 +69,7 @@ class TabLayout extends React.Component {
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>
-           <CustomerBasicInfo basicInfo ={MetaData} />>
+           <CustomerBasicInfo basicInfo ={MetaData} />
         </TabContainer>}
         {value === 1 && <TabContainer>
             <CustomerTheme theme ={theme}/>

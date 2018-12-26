@@ -130,7 +130,6 @@ class CustomerContainer extends Component {
 }
 
 const mapStateToProps = ({ Customer: customer }) => {
-  debugger
   return {
     customer: customer.customer,
     updatedCustomer: customer.customer.featureUpdated,

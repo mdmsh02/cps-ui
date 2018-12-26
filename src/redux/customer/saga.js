@@ -2,7 +2,7 @@ import { all, takeLatest, fork, call, put } from 'redux-saga/effects';
 import axios from 'axios';
 import actions from './actions';
 
-const BASEAPI = `http://localhost:7071/api/customer/APITEST/theme`
+const BASEAPI = `http://localhost:7071/api/customer/DEV/theme`
 
 const getCustomerDetailsAPI = async (paylaod) => {
   return await axios.get(BASEAPI);
