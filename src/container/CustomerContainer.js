@@ -9,7 +9,8 @@ const {
   fetchCustomerDetails,
   updateCustomerFeature,
   updateScreenTrackingFeature,
-  updateAnalyticsFeature
+  updateAnalyticsFeature,
+  updateCustomerData
 } = customerActions;
 
 
@@ -19,25 +20,19 @@ class CustomerContainer extends Component {
     this.switchHandler = this.switchHandler.bind(this);
     this.screenTrackingSwitchHandler = this.screenTrackingSwitchHandler.bind(this);
     this.analyticsTextChangeHandler = this.analyticsTextChangeHandler.bind(this);
+    this.onUpdateHandler = this.onUpdateHandler.bind(this);
   }
   componentDidMount() {
     this.props.fetchCustomerDetails();
   }
 
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.updatedCustomer) {
-      console.log(this.props.customer)
-      this.props.customer.features.ess = nextProps.updatedCustomer
-    }
-  }
-  analyticsTextChangeHandler(updatedObject, analyticsObejct) {
 
-    const analyticsData = Object.assign({}, analyticsObejct);
-    console.log(analyticsData)
-    this.props.updateAnalyticsFeature(analyticsData);
-
+  
+  analyticsTextChangeHandler(updatedEventData, UpdatedObj) {
+    this.props.updateAnalyticsFeature(UpdatedObj);
   }
+
   screenTrackingSwitchHandler(event, screenTrakingData, switchItem, pagename, actionType) {
     const copyScreenTrakingData = Object.assign([], screenTrakingData)
     switch (actionType) {
@@ -119,6 +114,13 @@ class CustomerContainer extends Component {
     ]
     this.props.updateCustomerFeature(updatedList);
   }
+
+  onUpdateHandler(events)
+  {
+    debugger
+    this.props.updateCustomerData(this.props.customer);
+  }
+
   render() {
     return (
       <TabLayout
@@ -126,14 +128,14 @@ class CustomerContainer extends Component {
         switchHandler={this.switchHandler}
         screenTrackingSwitchHandler={this.screenTrackingSwitchHandler}
         analyticsTextChangeHandler={this.analyticsTextChangeHandler}
+        onUpdateHandler = {this.onUpdateHandler}
       />);
   }
 }
 
 const mapStateToProps = ({ Customer: customer }) => {
   return {
-    customer: customer.customer,
-    updatedCustomer: customer.customer.featureUpdated,
+    customer: customer.customer
 
   }
 }
@@ -141,7 +143,7 @@ const mapStateToProps = ({ Customer: customer }) => {
 const mapDispatchToProps = (dispatch) => {
   //  console.log(fetchCustomerDetails);
   return bindActionCreators(
-    { fetchCustomerDetails, updateCustomerFeature, updateScreenTrackingFeature, updateAnalyticsFeature },
+    { fetchCustomerDetails, updateCustomerFeature, updateScreenTrackingFeature, updateAnalyticsFeature,updateCustomerData },
     dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerContainer);

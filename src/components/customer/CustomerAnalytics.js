@@ -49,8 +49,11 @@ function CustomerAnalytics(props) {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <form className={classes.container} noValidate autoComplete="off">
-                {Object.keys(item.values).map((key,childIndex) => (
-                  <TextField
+                {Object.keys(item.values).map((key,childIndex) => {
+                   
+                   const updatedObj = { [item.name] : analyticsData[item.name]};
+                  return <TextField
+                    name ={key}
                     key={childIndex}
                     id="filled-full-width"
                     label={key}
@@ -59,7 +62,7 @@ function CustomerAnalytics(props) {
                     className={classes.textField}
                     placeholder="Key"
                     onChange={event => {
-                      props.onChangeHandler(item.values[key]=event.target.value,dtoAnalytics);
+                      props.onChangeHandler(item.values[key]=event.target.value,  updatedObj,dtoAnalytics);
                     }}
                     fullWidth
                     margin="normal"
@@ -68,7 +71,7 @@ function CustomerAnalytics(props) {
                       shrink: true
                     }}
                   />
-                ))}
+                })}
               </form>
             </ExpansionPanelDetails>
           </ExpansionPanel>

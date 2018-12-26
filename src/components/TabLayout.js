@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Fab, Toolbar, IconButton, CssBaseline, Menu, MenuItem, Select, FilledInput } from '@material-ui/core';
+import { withStyles,MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
+import SaveIcon from '@material-ui/icons/Save';
+import { AppBar, Fab, Toolbar, IconButton, CssBaseline, Menu, MenuItem, Select, FilledInput,Button } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,6 +14,7 @@ import CustomerTheme from './customer/CustomerTheme';
 import CustomerFeatures from './customer/CustomerFeatures';
 import CustomerScreenTracking from './customer/CustomerScreenTracking';
 import CustomerAnalytics from './customer/CustomerAnalytics';
+import * as deepmerge from 'deepmerge';
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -23,7 +26,14 @@ function TabContainer(props) {
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
+const muitheme = createMuiTheme({
+  palette: {
+    primary: green,
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -61,6 +71,7 @@ const styles = theme => ({
     right: 0,
     margin: '0 auto',
   },
+
 });
 const options = [
   'None',
@@ -81,6 +92,8 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
+
+
 class TabLayout extends React.Component {
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -99,9 +112,10 @@ class TabLayout extends React.Component {
   };
 
   render() {
+    debugger
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, data, switchHandler, screenTrackingSwitchHandler, analyticsTextChangeHandler } = this.props;
+    const { classes, data, switchHandler, screenTrackingSwitchHandler, analyticsTextChangeHandler,onUpdateHandler } = this.props;
     const { value } = this.state;
     const { CustomerKey, customerid, customername, canAudit } = data;
     const MetaData = {
@@ -113,7 +127,7 @@ class TabLayout extends React.Component {
     const { theme } = data;
     const { features } = data;
     const { screenTracking } = data;
-    const { googleanalytics, appcenteranalytics } = Object.assign({}, data);
+    const { googleanalytics, appcenteranalytics } = deepmerge({},data);
     const Analytics = {
       googleanalytics,
       appcenteranalytics
@@ -132,7 +146,13 @@ class TabLayout extends React.Component {
                 <Tab label="Screen Tracking" />
                 <Tab label="Analytics" />
               </Tabs>
-
+            <div>
+            <MuiThemeProvider theme={muitheme}>
+        <Button variant="contained" color="primary" onClick = {onUpdateHandler} className={classes.margin}>
+         Save
+        </Button>
+      </MuiThemeProvider>
+            </div>
               <div>
                 <Select
                   value={this.state.age}
