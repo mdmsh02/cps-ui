@@ -3,12 +3,16 @@ import TabLayout from '../components/TabLayout';
 import { connect } from 'react-redux';
 import customerActions from '../redux/customer/actions';
 import { bindActionCreators } from 'redux';
+
+
 const {
   fetchCustomerDetails,
   updateCustomerFeature,
   updateScreenTrackingFeature,
   updateAnalyticsFeature
 } = customerActions;
+
+
 class CustomerContainer extends Component {
   constructor(props) {
     super(props);
@@ -117,15 +121,12 @@ class CustomerContainer extends Component {
   }
   render() {
     return (
-      <div>
-        <TabLayout
-          data={this.props.customer}
-          switchHandler={this.switchHandler}
-          screenTrackingSwitchHandler={this.screenTrackingSwitchHandler}
-          analyticsTextChangeHandler={this.analyticsTextChangeHandler}
-        />
-      </div>
-    );
+      <TabLayout
+        data={this.props.customer}
+        switchHandler={this.switchHandler}
+        screenTrackingSwitchHandler={this.screenTrackingSwitchHandler}
+        analyticsTextChangeHandler={this.analyticsTextChangeHandler}
+      />);
   }
 }
 

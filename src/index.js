@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import "./index.css";
 import CustomerContainer from './container/CustomerContainer';
+
+
 ReactDOM.render(
   <Provider store={store}>
     <CustomerContainer />
