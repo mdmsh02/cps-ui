@@ -3,6 +3,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
 const SwitchControlLayout = props => {
+  debugger
   return (
     <div>
       <FormControlLabel

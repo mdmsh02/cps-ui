@@ -24,7 +24,6 @@ const CustomerFeatures = props => {
 //   };
 console.log(props.feature);
   const { ess } = props.feature;
-    console.log(ess);
   return (
       <div> <h2>Customer Features</h2>
     <FormControl component="fieldset">
@@ -39,7 +38,6 @@ console.log(props.feature);
           />
         ))}
       </FormGroup>
-      <FormHelperText>Be careful</FormHelperText>
     </FormControl>
     </div>
   );

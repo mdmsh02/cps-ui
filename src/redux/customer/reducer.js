@@ -1,3 +1,4 @@
+import * as merge from 'deepmerge'
 const defaultState = {
     customer: {},
     features: {
@@ -27,18 +28,30 @@ const customerReducer = (state = defaultState, action) => {
         }
         case "CUSTOMER_FEATURE_UPDATE": {
             debugger
-            const copyCustomer = Object.assign({}, state);
-            copyCustomer.customer.features.ess = action.payload;
-            return copyCustomer;
+            const featurePayload = {
+                customer:{
+                    features:{
+                        ess:action.payload
+                    }
+                }
+            }
+            const overwriteMerge = (destinationArray, sourceArray, options) => sourceArray
+            const updated = merge(state,featurePayload,{ arrayMerge: overwriteMerge });
+            return updated
 
 
         }
 
         case "CUSTOMER_SCREENTRACKING_UPDATE": {
-            const copyCustomer = Object.assign({}, state);
-            copyCustomer.customer.screenTracking = action.payload;
-            return copyCustomer;
-
+            const screenTrackingPayload = {
+                customer:{
+                    screenTracking:action.payload
+                    
+                }
+            }
+            const overwriteMerge = (destinationArray, sourceArray, options) => sourceArray
+            const updated = merge(state,screenTrackingPayload,{ arrayMerge: overwriteMerge });
+            return updated
         }
 
         case "CUSTOMER_ANALYTICS_UPDATE": {

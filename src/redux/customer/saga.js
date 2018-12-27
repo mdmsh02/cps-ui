@@ -8,6 +8,7 @@ const getCustomerDetailsAPI = async (paylaod) => {
   return await axios.get(BASEAPI);
 }
 const updateCustomerDetailAPI = async(payload) =>{
+  debugger
   return await axios.post(BASEAPI,
     payload
     );
@@ -24,11 +25,11 @@ function* loadCustomerDetails() {
   }
 }
 
-function* callUpdateCustomerDetails() {
+function* callUpdateCustomerDetails({payload}) {
   try {
    //1st step
    debugger
-    const customersUpdate = yield call(updateCustomerDetailAPI);
+    const customersUpdate = yield call(updateCustomerDetailAPI,payload);
     yield put({type: actions.UPDATE_CUSTOMER_SUCCESS, payload: customersUpdate});
    //2nd step
   } catch(error) {
@@ -46,5 +47,5 @@ export function* updateCustomerDetails(){
 }
 
 export default function* rootSaga() {
-  yield all([fork(loadCustomerDetails,updateCustomerDetails)]);
+  yield all([fork(loadCustomerDetails),fork(updateCustomerDetails)]);
 }

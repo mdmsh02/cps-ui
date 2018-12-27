@@ -34,6 +34,7 @@ class CustomerContainer extends Component {
   }
 
   screenTrackingSwitchHandler(event, screenTrakingData, switchItem, pagename, actionType) {
+    debugger
     const copyScreenTrakingData = Object.assign([], screenTrakingData)
     switch (actionType) {
       case 'ON_PAGE_ACTION_FIRE': {
