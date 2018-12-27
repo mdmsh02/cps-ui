@@ -1,20 +1,23 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { withStyles,MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
-import SaveIcon from '@material-ui/icons/Save';
-import { AppBar, Fab, Toolbar, IconButton, CssBaseline, Menu, MenuItem, Select, FilledInput,Button } from '@material-ui/core';
+import { AppBar, Fab, Toolbar, IconButton, CssBaseline, Menu, MenuItem, Select, FilledInput, Button } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AddIcon from '@material-ui/icons/Add';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import CustomerBasicInfo from "./customer/CustomerBasicInfo";
 import CustomerTheme from './customer/CustomerTheme';
 import CustomerFeatures from './customer/CustomerFeatures';
 import CustomerScreenTracking from './customer/CustomerScreenTracking';
 import CustomerAnalytics from './customer/CustomerAnalytics';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import * as deepmerge from 'deepmerge';
+import '../App.css';
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -34,6 +37,13 @@ const muitheme = createMuiTheme({
     useNextVariants: true,
   },
 });
+
+const options = [
+  'DEV',
+  'TEST',
+  'SB-1'
+];
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -71,24 +81,15 @@ const styles = theme => ({
     right: 0,
     margin: '0 auto',
   },
-
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+  },
+  multilineColor: {
+    color: 'red',
+  }
 });
-const options = [
-  'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
-  'Hangouts Call',
-  'Luna',
-  'Oberon',
-  'Phobos',
-  'Pyxis',
-  'Sedna',
-  'Titania',
-  'Triton',
-  'Umbriel',
-];
+
 
 const ITEM_HEIGHT = 48;
 
@@ -104,18 +105,30 @@ class TabLayout extends React.Component {
   };
   state = {
     value: 0,
-    anchorEl: null
+    anchorEl: null,
+    env: '',
+    name: 'hai',
+    labelWidth: 0,
   };
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
-
-  render() {
+  onChangeMenu = (event, value) => {
     debugger
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  componentDidMount() {
+    this.setState({
+      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+    });
+  }
+  render() {
+
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, data, switchHandler, screenTrackingSwitchHandler, analyticsTextChangeHandler,onUpdateHandler } = this.props;
+    const { classes, data, switchHandler, screenTrackingSwitchHandler, analyticsTextChangeHandler, onUpdateHandler } = this.props;
     const { value } = this.state;
     const { CustomerKey, customerid, customername, canAudit } = data;
     const MetaData = {
@@ -127,7 +140,7 @@ class TabLayout extends React.Component {
     const { theme } = data;
     const { features } = data;
     const { screenTracking } = data;
-    const { googleanalytics, appcenteranalytics } = deepmerge({},data);
+    const { googleanalytics, appcenteranalytics } = deepmerge({}, data);
     const Analytics = {
       googleanalytics,
       appcenteranalytics
@@ -146,53 +159,43 @@ class TabLayout extends React.Component {
                 <Tab label="Screen Tracking" />
                 <Tab label="Analytics" />
               </Tabs>
-            <div>
-            <MuiThemeProvider theme={muitheme}>
-        <Button variant="contained" color="primary" onClick = {onUpdateHandler} className={classes.margin}>
-         Save
-        </Button>
-      </MuiThemeProvider>
-            </div>
               <div>
-                <Select
-                  value={this.state.age}
-                  onChange={this.handleChange}
-                  input={<FilledInput name="age" id="filled-age-simple" />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
+                <MuiThemeProvider theme={muitheme}>
+                  <Button variant="contained" color="primary" onClick={onUpdateHandler} className="labelColor">
+                    Save
+        </Button>
+                </MuiThemeProvider>
+              </div>
+              <div>
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel
+                    ref={ref => {
+                      this.InputLabelRef = ref;
+                    }}
+                    htmlFor="outlined-env-simple"
+                    className="labelColor"
+                  >
+                    ENV
+          </InputLabel>
+                  <Select
+                    value={this.state.env}
+                    onChange={this.onChangeMenu}
+                    input={
+                      <OutlinedInput
+                        labelWidth={this.state.labelWidth}
+                        name="env"
+                        id="outlined-env-simple"
+                        className="labelColor"
+                      />
 
-                {/* <IconButton
-                  aria-label="More"
-                  aria-owns={open ? 'long-menu' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                >
-                  <MoreVertIcon />
-                </IconButton> */}
-                {/* <Menu
-                  id="long-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={this.handleClose}
-                  PaperProps={{
-                    style: {
-                      maxHeight: ITEM_HEIGHT * 4.5,
-                      width: 200,
-                    },
-                  }}
-                >
-                  {options.map(option => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={this.handleClose}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Menu> */}
+                    }
+                  >
+
+                    <MenuItem value={10}>DEV</MenuItem>
+                    <MenuItem value={20}>TEST</MenuItem>
+                    <MenuItem value={30}>SB-1</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
             </Toolbar>
           </AppBar>
