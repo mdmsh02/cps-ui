@@ -2,18 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import ColorPicker from 'material-ui-color-picker';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import deepOrange from '@material-ui/core/colors/deepOrange';
 
 const styles = theme => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    flexDirection: "column",
+    backgroundColor: "DodgerBlue"
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
   dense: {
-    marginTop: 16
+    margin: 16
   },
   menu: {
     width: 200
@@ -21,53 +27,46 @@ const styles = theme => ({
 });
 
 
-    const CustomerTheme = props =>{
-    
-        return (
-          <div>
-            <h2>Customer Theme</h2>
-            <form  noValidate autoComplete="off">
-              <TextField
-                id="filled-full-width"
-                label="Brand Color"
-                value ={props.theme.brandcolor}
-                style={{ margin: 8 }}
-                placeholder="Brand Color"
-                helperText="Brand Color"
-                fullWidth
-                margin="normal"
-                variant="filled"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-              <TextField
-                id="filled-full-width"
-                label="backgroundcolor"
-                value ={props.theme.backgroundcolor}
-                style={{ margin: 8 }}
-                placeholder="backgroundcolor"
-                helperText="backgroundcolor"
-                fullWidth
-                margin="normal"
-                variant="filled"
-                InputProps={{
-                  readOnly: true
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            </form>
-            </div>
-          );
-    }
-   
+const CustomerTheme = props => {
+  const { classes } = props;
+  debugger
+  return (
+    <div>
+      <h2>Customer Theme</h2>
+      <form noValidate autoComplete="off">
+        <div className={classes.dense}>
+       
+            <ColorPicker
+              name='Brand Color'
+              label="Brand Color"
+              defaultValue={props.theme.brandcolor}
+              value={props.theme.brandcolor}
+              onChange={color => console.log(color)}
+              // style={{ fontColor: '#0000' }}
+            />
 
-    CustomerTheme.propTypes = {
+
+       
+        </div>
+       
+          <div className={classes.dense}>
+            <ColorPicker
+              name='Background Color'
+              label="Background Color"
+              defaultValue={props.theme.backgroundcolor}
+              value={props.theme.backgroundcolor}
+              onChange={color => console.log(color)}
+            />
+          </div>
+         
+       
+      </form>
+    </div>
+  );
+}
+
+
+CustomerTheme.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
