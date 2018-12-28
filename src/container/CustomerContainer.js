@@ -63,14 +63,12 @@ class CustomerContainer extends Component {
           canTrackAction: event.target.checked,
         };
         let pageData = copyScreenTrakingData.filter(item => item.pagename === pagename)
-        const actions = pageData.map(item => item.actions)
-        const index = actions[0].findIndex(
-          item => item.actionname === itemActionToUpdated.actionname
-        );
+        const pageAction = pageData.map(item => item.actions)[0]
+        const index = pageAction.findIndex(items => items.actionname === itemActionToUpdated.actionname);
         const updatedActionsOfPage = [
-          ...actions[0].slice(0, index),
+          ...pageAction.slice(0, index),
           itemActionToUpdated,
-          ...actions[0].slice(index + 1)
+          ...pageAction.slice(index + 1)
         ];
         const actionsObj = { actions: updatedActionsOfPage }
         const mergedUpdatedActionOnPage = Object.assign({}, pageData[0], actionsObj);
