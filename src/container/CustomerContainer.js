@@ -10,7 +10,8 @@ const {
   updateCustomerFeature,
   updateScreenTrackingFeature,
   updateAnalyticsFeature,
-  updateCustomerData
+  updateCustomerData,
+  updateCustomerTheme
 } = customerActions;
 
 
@@ -21,13 +22,31 @@ class CustomerContainer extends Component {
     this.screenTrackingSwitchHandler = this.screenTrackingSwitchHandler.bind(this);
     this.analyticsTextChangeHandler = this.analyticsTextChangeHandler.bind(this);
     this.onUpdateHandler = this.onUpdateHandler.bind(this);
+    this.onChangeColorHandler = this.onChangeColorHandler.bind(this);
   }
   componentDidMount() {
     this.props.fetchCustomerDetails();
   }
 
 
-
+  onChangeColorHandler(colorCode,themeSection,objToUpdate){
+    debugger
+    switch(themeSection){
+      case 'Brand Color' :{
+        objToUpdate.theme.brandcolor = colorCode;
+        this.props.updateCustomerTheme(objToUpdate);
+        break;
+      }
+      case 'Background Color' :{
+        objToUpdate.theme.backgroundcolor = colorCode;
+        this.props.updateCustomerTheme(objToUpdate);
+        break;
+      }
+      default:
+      break;
+    }
+    console.log(colorCode);
+  }
   
   analyticsTextChangeHandler(updatedEventData, UpdatedObj) {
     this.props.updateAnalyticsFeature(UpdatedObj);
@@ -130,6 +149,7 @@ class CustomerContainer extends Component {
         screenTrackingSwitchHandler={this.screenTrackingSwitchHandler}
         analyticsTextChangeHandler={this.analyticsTextChangeHandler}
         onUpdateHandler = {this.onUpdateHandler}
+        onChangeColorHandler = {this.onChangeColorHandler}
       />);
   }
 }
@@ -144,7 +164,7 @@ const mapStateToProps = ({ Customer: customer }) => {
 const mapDispatchToProps = (dispatch) => {
   //  console.log(fetchCustomerDetails);
   return bindActionCreators(
-    { fetchCustomerDetails, updateCustomerFeature, updateScreenTrackingFeature, updateAnalyticsFeature,updateCustomerData },
+    { fetchCustomerDetails, updateCustomerFeature, updateScreenTrackingFeature, updateAnalyticsFeature,updateCustomerData,updateCustomerTheme },
     dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerContainer);

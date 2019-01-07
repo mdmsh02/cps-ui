@@ -41,8 +41,8 @@ const CustomerTheme = props => {
               label="Brand Color"
               defaultValue={props.theme.brandcolor}
               value={props.theme.brandcolor}
-              onChange={color => console.log(color)}
-              // style={{ fontColor: '#0000' }}
+              onChange={color => props.onChangeColor(color,'Brand Color',props)}
+             
             />
 
 
@@ -55,7 +55,7 @@ const CustomerTheme = props => {
               label="Background Color"
               defaultValue={props.theme.backgroundcolor}
               value={props.theme.backgroundcolor}
-              onChange={color => console.log(color)}
+              onChange={color => props.onChangeColor(color,'Background Color',props)}
             />
           </div>
          

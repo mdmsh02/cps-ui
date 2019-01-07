@@ -9,7 +9,12 @@ const customerAction = {
             dispatch({type:"FETCH_CUSTOMER_DETAIL",payload:""})
         }
     },
-    
+    updateCustomerTheme: (param)=> {
+        debugger
+        return (dispatch) =>{
+            dispatch({type:"CUSTOMER_THEME_UPDATE",payload:param})
+        }
+    },
     updateCustomerFeature: (param)=> {
         debugger
         return (dispatch) =>{

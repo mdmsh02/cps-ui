@@ -26,6 +26,19 @@ const customerReducer = (state = defaultState, action) => {
                 ...state
             }
         }
+        case "CUSTOMER_THEME_UPDATE": {
+            debugger
+            const themePayload = {
+                customer:{
+                    theme:action.payload
+                }
+            }
+            const overwriteMerge = (destinationArray, sourceArray, options) => sourceArray
+            const updated = merge(state,themePayload,{ arrayMerge: overwriteMerge });
+            return updated
+
+
+        }
         case "CUSTOMER_FEATURE_UPDATE": {
             debugger
             const featurePayload = {

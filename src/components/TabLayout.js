@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
-import { AppBar, Fab, Toolbar, IconButton, CssBaseline, Menu, MenuItem, Select, FilledInput, Button } from '@material-ui/core';
+import { AppBar, Fab, Toolbar, CssBaseline, Button } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,10 +13,8 @@ import CustomerTheme from './customer/CustomerTheme';
 import CustomerFeatures from './customer/CustomerFeatures';
 import CustomerScreenTracking from './customer/CustomerScreenTracking';
 import CustomerAnalytics from './customer/CustomerAnalytics';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import * as deepmerge from 'deepmerge';
+import CustomerMenuLayout from './CustomerMenuLayout';
 import '../App.css';
 function TabContainer(props) {
   return (
@@ -81,10 +79,6 @@ const styles = theme => ({
     right: 0,
     margin: '0 auto',
   },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-  },
   multilineColor: {
     color: 'red',
   }
@@ -96,13 +90,7 @@ const ITEM_HEIGHT = 48;
 
 
 class TabLayout extends React.Component {
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+  
   state = {
     value: 0,
     anchorEl: null,
@@ -114,21 +102,10 @@ class TabLayout extends React.Component {
   handleChange = (event, value) => {
     this.setState({ value });
   };
-  onChangeMenu = (event, value) => {
-    debugger
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  componentDidMount() {
-    this.setState({
-      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-    });
-  }
+  
   render() {
 
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-    const { classes, data, switchHandler, screenTrackingSwitchHandler, analyticsTextChangeHandler, onUpdateHandler } = this.props;
+    const { classes, data, switchHandler, screenTrackingSwitchHandler, analyticsTextChangeHandler, onUpdateHandler ,onChangeColorHandler } = this.props;
     const { value } = this.state;
     const { CustomerKey, customerid, customername, canAudit } = data;
     const MetaData = {
@@ -166,47 +143,17 @@ class TabLayout extends React.Component {
         </Button>
                 </MuiThemeProvider>
               </div>
-              <div>
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <InputLabel
-                    ref={ref => {
-                      this.InputLabelRef = ref;
-                    }}
-                    htmlFor="outlined-env-simple"
-                    className="labelColor"
-                  >
-                    ENV
-          </InputLabel>
-                  <Select
-                    value={this.state.env}
-                    onChange={this.onChangeMenu}
-                    input={
-                      <OutlinedInput
-                        labelWidth={this.state.labelWidth}
-                        name="env"
-                        id="outlined-env-simple"
-                        className="labelColor"
-                      />
-
-                    }
-                  >
-
-                    <MenuItem value={10}>DEV</MenuItem>
-                    <MenuItem value={20}>TEST</MenuItem>
-                    <MenuItem value={30}>SB-1</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
+             { <CustomerMenuLayout/>}
             </Toolbar>
           </AppBar>
           {value === 0 && <TabContainer>
             <CustomerBasicInfo basicInfo={MetaData} />
           </TabContainer>}
           {value === 1 && <TabContainer>
-            <CustomerTheme theme={theme} />
+            <CustomerTheme theme={theme} onChangeColor = {onChangeColorHandler} />
           </TabContainer>}
           {value === 2 && <TabContainer>
-            <CustomerFeatures feature={features} switchHandler={switchHandler}></CustomerFeatures>
+            <CustomerFeatures feature={features} switchHandler = {switchHandler}></CustomerFeatures>
           </TabContainer>}
           {value === 3 && <TabContainer>
             <CustomerScreenTracking screenTracking={screenTracking} switchHandler={screenTrackingSwitchHandler} />
