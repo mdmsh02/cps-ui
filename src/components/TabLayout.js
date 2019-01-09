@@ -16,6 +16,7 @@ import CustomerAnalytics from './customer/CustomerAnalytics';
 import * as deepmerge from 'deepmerge';
 import CustomerMenuLayout from './CustomerMenuLayout';
 import '../App.css';
+import LoadingBar from 'react-redux-loading-bar'
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -124,7 +125,11 @@ class TabLayout extends React.Component {
     }
     console.log(data);
     return (
+   
       <React.Fragment>
+       
+          <LoadingBar/>
+        
         <CssBaseline />
         <div className={classes.root}>
           <AppBar position="static">
