@@ -16,7 +16,7 @@ import CustomerAnalytics from './customer/CustomerAnalytics';
 import * as deepmerge from 'deepmerge';
 import CustomerMenuLayout from './CustomerMenuLayout';
 import '../App.css';
-import LoadingBar from 'react-redux-loading-bar'
+
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -82,6 +82,17 @@ const styles = theme => ({
   },
   multilineColor: {
     color: 'red',
+  },
+  overlay: {
+  height: 100,
+  width: 0,
+  position: 'fixed',
+  zIndex: 1,
+  top: 0,
+  left: 0,
+  backgroundColor: 'rgba(0,0,0, 0.9)',
+  overflowX: 'hidden',
+  transition: '0.5s'
   }
 });
 
@@ -124,12 +135,12 @@ class TabLayout extends React.Component {
       appcenteranalytics
     }
     console.log(data);
+   
     return (
    
       <React.Fragment>
-       
-          <LoadingBar/>
         
+         
         <CssBaseline />
         <div className={classes.root}>
           <AppBar position="static">

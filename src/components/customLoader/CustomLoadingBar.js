@@ -4,7 +4,8 @@ import { bool, number, object, string } from 'prop-types'
 import { connect } from 'react-redux'
 
 import { DEFAULT_SCOPE } from './loading_bar_ducks'
-
+import CustomerContainer from '../../container/CustomerContainer';
+import LoadingLayout from './LoadingLayout';
 export const UPDATE_TIME = 400
 export const MAX_PROGRESS = 99
 export const PROGRESS_INCREASE = 20
@@ -170,7 +171,7 @@ class CustomLoadingBar extends Component {
     // Use default styling if there's no CSS class applied
     if (!this.props.className) {
       style.height = '3px'
-      style.backgroundColor = 'red'
+      style.backgroundColor = 'Green'
       style.position = 'absolute'
     }
 
@@ -185,14 +186,14 @@ class CustomLoadingBar extends Component {
 
   render() {
     if (this.state.status === 'hidden') {
-      return <div />
+      return <CustomerContainer/>
     }
 
     return (
-      <div>
+      <div >
         <div style={this.buildStyle()} className={this.props.className} />
         <div style={{ display: 'table', clear: 'both' }} />
-        <div><p>loading....</p></div>
+        <LoadingLayout></LoadingLayout>
       </div>
     )
   }

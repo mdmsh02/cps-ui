@@ -141,6 +141,7 @@ class CustomerContainer extends Component {
 
   render() {
     return (
+      <div>
       <TabLayout
         data={this.props.customer}
         switchHandler={this.switchHandler}
@@ -148,7 +149,9 @@ class CustomerContainer extends Component {
         analyticsTextChangeHandler={this.analyticsTextChangeHandler}
         onUpdateHandler = {this.onUpdateHandler}
         onChangeColorHandler = {this.onChangeColorHandler}
-      />);
+      />
+      </div>
+      );
   }
 }
 
