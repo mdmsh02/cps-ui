@@ -58,7 +58,7 @@ console.log(screenData)
               }
             />
            
-               <p>ActionName {action.actionname}</p>
+               {/* <p>ActionName {action.actionname}</p> */}
             </div>
            
           ))}

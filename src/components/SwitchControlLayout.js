@@ -14,7 +14,7 @@ const SwitchControlLayout = props => {
             value={props.name}
           />
         }
-        labelPlacement="start"
+        // labelPlacement="start"
         label={props.name}
       />
     </div>

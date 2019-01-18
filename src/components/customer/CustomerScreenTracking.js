@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CardLayout from './../CardLayout';
 
-const customerScreenTracking = props =>{
+const CustomerScreenTracking = props =>{
 
     const screenTrackingData = props.screenTracking;
     console.log(screenTrackingData);
     
   return(
-   <div>
-       <h2>Screen Trakcing</h2>
+   <div >
+       <h2> Screen Tracking </h2>
+       <div style={{display:'flex'}}>
        {
            screenTrackingData.map((data,index) =>(
             <CardLayout  key={index+data.pagename}
@@ -19,9 +20,9 @@ const customerScreenTracking = props =>{
             ></CardLayout>
            ))
        }
-       
+       </div>
    </div>   
   )  
 }
 
-export default customerScreenTracking;
+export default CustomerScreenTracking;

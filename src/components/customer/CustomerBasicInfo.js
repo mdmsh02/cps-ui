@@ -13,7 +13,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   dense: {
-    marginTop: 16
+    marginTop: 3
   },
   menu: {
     width: 200
@@ -22,11 +22,11 @@ const styles = theme => ({
 
 
     const customerBasicInfo = props =>{
-    
+    debugger
      // console.log(this.props.BaiscInfo);
         return (
           <div>
-            <h2>Customer Basic Details</h2>
+            <h2> Basic Details </h2>
             <form noValidate autoComplete="off">
               <TextField
                 id="filled-full-width"

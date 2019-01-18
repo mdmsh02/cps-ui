@@ -32,7 +32,7 @@ const CustomerTheme = props => {
   debugger
   return (
     <div>
-      <h2>Customer Theme</h2>
+      <h2> Themes </h2>
       <form noValidate autoComplete="off">
         <div className={classes.dense}>
        

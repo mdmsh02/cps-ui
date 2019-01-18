@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { DEFAULT_SCOPE } from './loading_bar_ducks'
 import CustomerContainer from '../../container/CustomerContainer';
 import LoadingLayout from './LoadingLayout';
+import Content from '../PaperBase/Content';
 export const UPDATE_TIME = 400
 export const MAX_PROGRESS = 99
 export const PROGRESS_INCREASE = 20
@@ -186,10 +187,14 @@ class CustomLoadingBar extends Component {
 
   render() {
     if (this.state.status === 'hidden') {
-      return <CustomerContainer/>
+      debugger
+      return (
+        <Content component={this.props.component}></Content>
+      );
     }
 
     return (
+     
       <div >
         <div style={this.buildStyle()} className={this.props.className} />
         <div style={{ display: 'table', clear: 'both' }} />

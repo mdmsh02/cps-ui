@@ -3,6 +3,9 @@ import TabLayout from '../components/TabLayout';
 import { connect } from 'react-redux';
 import customerActions from '../redux/customer/actions';
 import { bindActionCreators } from 'redux';
+import ResponsiveDrawer from '../components/ResponsiveDrawer';
+import CustomerBasicInfo from '../components/customer/CustomerBasicInfo';
+import Router from '../components/Router';
 
 
 const {
@@ -140,16 +143,30 @@ class CustomerContainer extends Component {
   }
 
   render() {
+    debugger
+    const { CustomerKey, customerid, customername, canAudit } = this.props.customer;
+    const MetaData = {
+      CustomerKey,
+      customerid,
+      customername,
+      canAudit
+    }
     return (
       <div>
-      <TabLayout
+        <Router data={this.props.customer}
+        switchHandler={this.switchHandler}
+        screenTrackingSwitchHandler={this.screenTrackingSwitchHandler}
+        analyticsTextChangeHandler={this.analyticsTextChangeHandler}
+        onUpdateHandler = {this.onUpdateHandler}
+        onChangeColorHandler = {this.onChangeColorHandler}></Router>
+      {/* <TabLayout
         data={this.props.customer}
         switchHandler={this.switchHandler}
         screenTrackingSwitchHandler={this.screenTrackingSwitchHandler}
         analyticsTextChangeHandler={this.analyticsTextChangeHandler}
         onUpdateHandler = {this.onUpdateHandler}
         onChangeColorHandler = {this.onChangeColorHandler}
-      />
+      /> */}
       </div>
       );
   }

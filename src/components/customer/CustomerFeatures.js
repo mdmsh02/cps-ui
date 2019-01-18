@@ -15,6 +15,7 @@ import SwitchControlLayout from "./../SwitchControlLayout";
 
 
 const CustomerFeatures = props => {
+  debugger
 //   const handleChange = name => event => {
 //     console.log(event);
 //    const updatedList= updateTodo(ess,{[name]:event.target.checked});
@@ -27,7 +28,6 @@ console.log(props.feature);
   return (
       <div> <h2>Customer Features</h2>
     <FormControl component="fieldset">
-      <FormLabel component="legend">Feature Control</FormLabel>
       <FormGroup>
         {ess.map((features,index) => (
             

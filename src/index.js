@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import "./index.css";
-import CustomLoadingBar from './components/customLoader/CustomLoadingBar'
+import CustomerContainer from './container/CustomerContainer';
+
 
 ReactDOM.render(
   <Provider store={store}>
-    <CustomLoadingBar />
+    <CustomerContainer />
   </Provider>,
   document.getElementById("root")
 );

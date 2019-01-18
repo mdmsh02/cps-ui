@@ -39,7 +39,7 @@ function CustomerAnalytics(props) {
   console.log(dtoAnalytics);
   return (
     <div>
-      <h2>Analytics</h2>
+      <h2> Analytics </h2>
 
       {dtoAnalytics.map((item, rootIndex) => (
         <div className={classes.root} key={rootIndex}>
